@@ -31,7 +31,7 @@ sure to check *Output replaces selected text.*
     Input is [entire selection]         [x] Output replaces selected text
 ```
 3. Add "Run Shell Script" from Automator's Utilities actions, and 
-enter a line in the workflow to run the script you've created.
+enter a line in the workflow to run the program you've created.
 ```
     /usr/local/bin/quoteHere
 ```

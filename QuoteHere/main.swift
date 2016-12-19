@@ -18,20 +18,20 @@ fileprivate func usage(mistake: String? = nil) {
 }
 
 fileprivate func help() {
-    let help = programName +
-        " - Quote and escape a block of text.\n" +
-        "Options:\n" +
-        "    -u --unquote    restore quoted escaped text to original\n" +
-        "    -h --help this help\n" +
-        "    \n" +
-        "This works as a System service to escape selected text.\n" +
-        "It can turn a multi-lined text heredoc into Swift friendly string.\n" +
-        "\n" +
-        "// Example use:\n" +
-        "print(quoteHereDoc(doc: \"a\\nb\\nc\\n\"))\n" +
-        "\"a\\n\" +\n" +
-        "\"b\\n\" +\n" +
-    "\"c\\n\"\n"
+    let help =
+"\(programName) - Quote and escape a block of text.\n" +
+"Options:\n" +
+"    -u --unquote    restore quoted escaped text to original\n" +
+"    -h --help this help\n" +
+"    \n" +
+"This works as a System service to escape selected text.\n" +
+"It turns a multi-lined text heredoc into Swift friendly string.\n" +
+"\n" +
+"// Example:\n" +
+"print(quoteHereDoc(doc: \"a\\nb\\nc\\n\"))\n" +
+"\"a\\n\" +\n" +
+"\"b\\n\" +\n" +
+"\"c\\n\"\n"
     
     print(help)
     exit(0)
@@ -87,7 +87,7 @@ func test() {
  ```
  */
 func quoteHereDoc(doc: String) -> String {
-    let input = doc //.chomped()
+    let input = doc.countOccurances(of: "\n") == 1 ? doc.chomped() : doc
     
     /* From Swift ref: The escaped special characters
      \0 (null character),
@@ -110,7 +110,7 @@ func quoteHereDoc(doc: String) -> String {
     let in3 = "\"" + in2 + "\""
     
     // Remove artifact... without this the final line ends with +\n ""
-    let in4 = in3.replacingOccurrences(of: "\\s*\\+\\R\\s*\"\"$", with: "", options: .regularExpression)
+    let in4 = in3.replacingOccurrences(of: "\\s*\\+\\R\\s*\"\"$", with: "\n", options: .regularExpression)
     return in4
 }
 
@@ -135,5 +135,5 @@ func unquoteHereDoc(doc: String) -> String {
     
     return in3
 }
-
-test()
+//test()
+main()

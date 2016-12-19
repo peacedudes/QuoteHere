@@ -31,9 +31,8 @@ class System {
     /**
      Read all of stdin to end of file as a String.
      
-     This inefficent contortion allows cooked input from terminal or pipes,
-     making reading stdin work as a user would expect.
-     
+     We use this inefficent way of reading stdin because it 'cooks' input
+     from terminal or pipes, and that's what a human user expects.
      */
     private func readStdin() -> String {
         var inputText: [String] = []
@@ -50,8 +49,13 @@ public extension String {
         self = self.chomped()
     }
     
-    /// Trim final new line character, if present, returns a new string
+    /// Trim final new line character, if present, returning a new string
     public func chomped() -> String {
         return self.hasSuffix("\n") ? self.substring(to: index(before: endIndex)) : self
+    }
+    
+    public func countOccurances(of: String) -> Int {
+        let occurances = (self + of).replacingOccurrences(of: ".*?\(of)", with: ".", options: .regularExpression)
+        return occurances.characters.count - 1
     }
 }
